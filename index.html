@@ -1,1 +1,58 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Interactive Heat Score Calculator</title>\n    <style>\n        body { font-family: Arial, sans-serif; margin: 20px; }\n        label { display: block; margin-bottom: 5px; }\n        input[type="number"] { margin-bottom: 10px; }\n        button { margin-top: 10px; }\n    </style>\n</head>\n<body>\n    <h1>Interactive Heat Score Calculator</h1>\n    <label for="tempInput">Enter Temperature (°C):</label>\n    <input type="number" id="tempInput" placeholder="Temperature...">\n    <label for="humidityInput">Enter Humidity (%):</label>\n    <input type="number" id="humidityInput" placeholder="Humidity...">\n    <button id="calculateBtn">Calculate Heat Score</button>\n    <h2 id="result">Heat Score: </h2>\n    <script>\n        document.getElementById('calculateBtn').addEventListener('click', function() {\n            const temp = parseFloat(document.getElementById('tempInput').value);\n            const humidity = parseFloat(document.getElementById('humidityInput').value);\n            if (!isNaN(temp) && !isNaN(humidity)) {\n                const heatScore = calculateHeatScore(temp, humidity);\n                document.getElementById('result').innerText = 'Heat Score: ' + heatScore;\n            } else {\n                alert('Please enter valid numbers.');\n            }\n        });\n        function calculateHeatScore(temp, humidity) {\n            return (temp + humidity - 10).toFixed(2); // Simplified formula\n        }\n    <\/script>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Heat Score Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
+        h1 { text-align: center; }
+        .score { display: flex; justify-content: space-between; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Heat Score Calculator</h1>
+        <form id="calculator">
+            <div class="score">
+                <label for="waveScore">Wave Score:</label>
+                <input type="number" id="waveScore" placeholder="Enter Wave Score" required>
+            </div>
+            <div class="score">
+                <label for="criterionScore">Criterion Score:</label>
+                <input type="number" id="criterionScore" placeholder="Enter Criterion Score" required>
+            </div>
+            <div class="score">
+                <label for="bonuses">Bonuses:</label>
+                <input type="number" id="bonuses" placeholder="Enter Bonuses" required>
+            </div>
+            <div class="score">
+                <label for="penalties">Penalties:</label>
+                <input type="number" id="penalties" placeholder="Enter Penalties" required>
+            </div>
+            <div class="score">
+                <label for="tandemMode">Tandem Mode:</label>
+                <select id="tandemMode">
+                    <option value="0">Off</option>
+                    <option value="1">On</option>
+                </select>
+            </div>
+            <button type="submit">Calculate Total Score</button>
+        </form>
+        <div id="result" style="margin-top: 20px; font-weight: bold;"></div>
+    </div>
+    <script>
+        document.getElementById('calculator').onsubmit = function(event) {
+            event.preventDefault();
+            var waveScore = parseFloat(document.getElementById('waveScore').value);
+            var criterionScore = parseFloat(document.getElementById('criterionScore').value);
+            var bonuses = parseFloat(document.getElementById('bonuses').value);
+            var penalties = parseFloat(document.getElementById('penalties').value);
+            var tandemMode = document.getElementById('tandemMode').value === '1' ? 1 : 0;
+            var totalScore = waveScore + criterionScore + bonuses - penalties + tandemMode;
+            document.getElementById('result').innerText = 'Total Score: ' + totalScore;
+        };
+    </script>
+</body>
+</html>
