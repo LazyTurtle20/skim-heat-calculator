@@ -3,93 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heat Score Calculator</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .container { max-width: 600px; margin: auto; }
-        h1 { text-align: center; }
-        .input-group { margin: 10px 0; }
-        label { display: block; margin: 5px 0; }
-        input[type="number"] { width: 100%; padding: 8px; }
-        input[type="checkbox"] { margin-right: 10px; }
-        button { padding: 10px; width: 100%; }
-        .results { margin-top: 20px; border: 1px solid #ccc; padding: 10px; }
-    </style>
+    <title>Skim Heat Scoring Calculator</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Heat Score Calculator</h1>
-        <div id="waves">
-            <h2>Wave Scores</h2>
-            <div class="input-group">
-                <label>Difficulty (0-10)</label>
-                <input type="number" id="difficulty" min="0" max="10" />
-                <label>Steeze (0-10)</label>
-                <input type="number" id="steeze" min="0" max="10" />
-                <label>Consistency (0-10)</label>
-                <input type="number" id="consistency" min="0" max="10" />
-            </div>
-            <h3>Heat Modifiers</h3>
-            <input type="checkbox" id="innovation">
-            <label for="innovation">Innovation Bonus</label>
-            <input type="checkbox" id="feature">
-            <label for="feature">Feature Use</label>
-            <h3>Failure Penalties</h3>
-            <label>Completion Failures:</label>
-            <input type="number" id="completionFailures" min="0" />
-            <label>Total Misses:</label>
-            <input type="number" id="totalMisses" min="0" />
-            <h3>Difficulty Mitigation</h3>
-            <input type="checkbox" id="mitigation">
-            <label for="mitigation">Mitigation</label>
-            <h3>Tandem Mode</h3>
-            <label>Rider 2 Score (optional):</label>
-            <input type="number" id="rider2Score" min="0" />
-            <label>Synchronization Multiplier:</label>
-            <input type="number" id="syncMultiplier" min="0" />
-            <button onclick="calculateScore()">Calculate Score</button>
-        </div>
-        <div class="results" id="results" style="display:none;">
-            <h2>Results</h2>
-            <p id="rawScores"></p>
-            <p id="baseScore"></p>
-            <p id="bonuses"></p>
-            <p id="penalties"></p>
-            <p id="offsetCapStatus"></p>
-            <p id="finalScore"></p>
-        </div>
-    </div>
+    <h1>Interactive Skim Heat Scoring Calculator</h1>
+    <label for="score">Enter your score:</label>
+    <input type="number" id="score" placeholder="0" />
+    <button id="calculate">Calculate Heat Score</button>
+    <p id="result"></p>
+
     <script>
-        function calculateScore() {
-            // Logic to calculate the heat score based on inputs
-            let difficulty = parseInt(document.getElementById('difficulty').value) || 0;
-            let steeze = parseInt(document.getElementById('steeze').value) || 0;
-            let consistency = parseInt(document.getElementById('consistency').value) || 0;
-            let innovation = document.getElementById('innovation').checked;
-            let feature = document.getElementById('feature').checked;
-            let completionFailures = parseInt(document.getElementById('completionFailures').value) || 0;
-            let totalMisses = parseInt(document.getElementById('totalMisses').value) || 0;
-            let mitigation = document.getElementById('mitigation').checked;
-            let rider2Score = parseInt(document.getElementById('rider2Score').value) || 0;
-            let syncMultiplier = parseInt(document.getElementById('syncMultiplier').value) || 1;
-            
-            // Calculate base scores and modifiers
-            let waveScore = (difficulty + steeze + consistency) / 3;
-            let bonuses = (innovation ? 2 : 0) + (feature ? 1 : 0);
-            let penalties = completionFailures + totalMisses;
-            let baseScore = waveScore + bonuses - penalties;
-            baseScore *= (mitigation ? 0.9 : 1);
-            let finalScore = baseScore * syncMultiplier;
-            
-            // Update results display
-            document.getElementById('rawScores').innerText = `Raw Wave Score: ${waveScore.toFixed(2)}`;
-            document.getElementById('baseScore').innerText = `Base Score: ${baseScore.toFixed(2)}`;
-            document.getElementById('bonuses').innerText = `Bonuses: ${bonuses}`;
-            document.getElementById('penalties').innerText = `Penalties: ${penalties}`;
-            document.getElementById('offsetCapStatus').innerText = `Offset Cap Status: ${finalScore > 10 ? 'Capped' : 'Not Capped'}`;
-            document.getElementById('finalScore').innerText = `Final Heat Score: ${finalScore.toFixed(2)}`;
-            document.getElementById('results').style.display = 'block';
-        }
-    </script>
+        document.getElementById('calculate').addEventListener('click', function() {
+            const score = document.getElementById('score').value;
+            let heatScore;
+
+            // Example scoring logic
+            if (score >= 90) {
+                heatScore = 'Excellent';
+            } else if (score >= 75) {
+                heatScore = 'Good';
+            } else if (score >= 50) {
+                heatScore = 'Average';
+            } else {
+                heatScore = 'Poor';
+            }
+
+            document.getElementById('result').innerText = `Heat Score: ${heatScore}`;
+        });
+    <\/script>
 </body>
 </html>
